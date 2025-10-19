@@ -422,7 +422,8 @@ h1 {
   font-weight: 600;
 }
 
-.setting-row input {
+.setting-row input,
+.setting-row select {
   padding: 12px 15px;
   background: rgba(255, 255, 255, 0.05);
   border: 2px solid rgba(255, 255, 255, 0.1);
@@ -430,11 +431,18 @@ h1 {
   color: #e0e0e0;
   font-size: 1rem;
   transition: all 0.2s ease;
+  width: 100%;
+  cursor: pointer;
 }
 
-.setting-row input:focus {
+.setting-row input:focus,
+.setting-row select:focus {
   outline: none;
   border-color: #00aaff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.setting-row select:hover {
   background: rgba(255, 255, 255, 0.08);
 }
 

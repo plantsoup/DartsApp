@@ -4,19 +4,22 @@ let ws;
 let reconnectTimeout;
 
 // Default connection settings
+const DEFAULT_PROTOCOL = "ws";
 const DEFAULT_IP = "192.168.0.224";
 const DEFAULT_PORT = "3180";
 
 // Load settings from localStorage
 function loadSettings() {
   return {
+    protocol: localStorage.getItem('autodarts-protocol') || DEFAULT_PROTOCOL,
     ip: localStorage.getItem('autodarts-ip') || DEFAULT_IP,
     port: localStorage.getItem('autodarts-port') || DEFAULT_PORT
   };
 }
 
 // Save settings to localStorage
-function saveSettings(ip, port) {
+function saveSettings(protocol, ip, port) {
+  localStorage.setItem('autodarts-protocol', protocol);
   localStorage.setItem('autodarts-ip', ip);
   localStorage.setItem('autodarts-port', port);
 }
@@ -24,9 +27,7 @@ function saveSettings(ip, port) {
 // Get WebSocket URL from settings
 function getWebSocketUrl() {
   const settings = loadSettings();
-  // Use ws:// for local development, allow wss:// if configured
-  const protocol = settings.ip.startsWith('localhost') || settings.ip.startsWith('127.0.0.1') ? 'ws' : 'ws';
-  return `${protocol}://${settings.ip}:${settings.port}/api/events`;
+  return `${settings.protocol}://${settings.ip}:${settings.port}/api/events`;
 }
 
 // State
@@ -41,7 +42,7 @@ let gameState = {
 let connectionStatus, statusText, eventText, throwList, totalScore;
 let canvas, ctx;
 let settingsModal, settingsBtn, saveSettingsBtn, cancelSettingsBtn;
-let ipAddressInput, portInput;
+let protocolSelect, ipAddressInput, portInput;
 
 // Initialize app
 export function init() {
@@ -59,6 +60,7 @@ export function init() {
   settingsBtn = document.getElementById('settings-btn');
   saveSettingsBtn = document.getElementById('save-settings-btn');
   cancelSettingsBtn = document.getElementById('cancel-settings-btn');
+  protocolSelect = document.getElementById('protocol');
   ipAddressInput = document.getElementById('ip-address');
   portInput = document.getElementById('port');
 
@@ -69,6 +71,7 @@ export function init() {
 
   // Load saved settings into inputs
   const settings = loadSettings();
+  protocolSelect.value = settings.protocol;
   ipAddressInput.value = settings.ip;
   portInput.value = settings.port;
 
@@ -86,6 +89,7 @@ function closeSettings() {
 }
 
 function saveAndReconnect() {
+  const protocol = protocolSelect.value;
   const ip = ipAddressInput.value.trim();
   const port = portInput.value.trim();
   
@@ -95,7 +99,7 @@ function saveAndReconnect() {
   }
   
   // Save settings
-  saveSettings(ip, port);
+  saveSettings(protocol, ip, port);
   
   // Close modal
   closeSettings();

@@ -20,9 +20,7 @@ A modern, interactive dashboard for AutoDarts with support for dart games like K
 
 ### Running the Dashboard
 
-**⚠️ Important:** This app must be served over **HTTP** (not HTTPS) to connect to local AutoDarts servers, since browsers block insecure WebSocket connections from HTTPS pages.
-
-Since this project uses ES6 modules, you need to serve it from a web server. Here are your options:
+Since this project uses ES6 modules, you need to serve it from a web server. You have multiple hosting options:
 
 #### Option 1: Python (if installed)
 ```bash
@@ -49,12 +47,25 @@ Then open: `http://localhost:8080`
 2. Right-click on `index.html`
 3. Select "Open with Live Server"
 
+#### Option 4: Cloudflare Pages / GitHub Pages
+1. Push your code to GitHub
+2. Deploy to Cloudflare Pages, Netlify, or GitHub Pages
+3. Configure settings to use **wss://** protocol (see Configuration below)
+
 ### Configuration
 
 1. Click the **⚙️ Settings** button in the header
-2. Enter your AutoDarts server IP address (e.g., `192.168.0.224`)
-3. Enter the port (usually `3180`)
-4. Click **Save & Reconnect**
+2. Select the protocol:
+   - **ws://** - For local hosting (HTTP) with standard AutoDarts setup
+   - **wss://** - For HTTPS hosting (Cloudflare Pages, etc.) or if using AutoDarts cloud relay
+3. Enter your AutoDarts server IP address or hostname
+4. Enter the port (usually `3180`)
+5. Click **Save & Reconnect**
+
+**Note:** When hosting on HTTPS (like Cloudflare Pages), you'll need to use `wss://` protocol. This requires either:
+- AutoDarts cloud relay service
+- Setting up SSL/TLS on your local AutoDarts server
+- Using a VPN or reverse proxy with SSL
 
 Your settings are automatically saved in browser localStorage and will persist between sessions.
 
@@ -129,7 +140,7 @@ All styles are in `styles.css` with clear section comments:
 **Solution**: Make sure you're using a web server (see "Running the Dashboard" above)
 
 **Issue**: "Mixed Content" or "Insecure WebSocket" error  
-**Solution**: Access the app via HTTP (not HTTPS). If using Cloudflare Pages or similar, run it locally instead.
+**Solution**: In Settings, switch protocol to **wss://** if accessing via HTTPS, or use **ws://** if accessing via HTTP (localhost).
 
 **Issue**: Can't connect to AutoDarts  
 **Solution**: Click ⚙️ Settings and verify your AutoDarts IP address and port are correct
