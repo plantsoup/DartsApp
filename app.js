@@ -24,7 +24,9 @@ function saveSettings(ip, port) {
 // Get WebSocket URL from settings
 function getWebSocketUrl() {
   const settings = loadSettings();
-  return `ws://${settings.ip}:${settings.port}/api/events`;
+  // Use ws:// for local development, allow wss:// if configured
+  const protocol = settings.ip.startsWith('localhost') || settings.ip.startsWith('127.0.0.1') ? 'ws' : 'ws';
+  return `${protocol}://${settings.ip}:${settings.port}/api/events`;
 }
 
 // State

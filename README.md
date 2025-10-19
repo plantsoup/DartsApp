@@ -20,29 +20,29 @@ A modern, interactive dashboard for AutoDarts with support for dart games like K
 
 ### Running the Dashboard
 
-Since this project uses ES6 modules, you need to serve it from a web server. Here are a few options:
+**⚠️ Important:** This app must be served over **HTTP** (not HTTPS) to connect to local AutoDarts servers, since browsers block insecure WebSocket connections from HTTPS pages.
+
+Since this project uses ES6 modules, you need to serve it from a web server. Here are your options:
 
 #### Option 1: Python (if installed)
 ```bash
-# Python 3
-python3 -m http.server 8000
-
-# Python 2
-python -m SimpleHTTPServer 8000
+cd /path/to/DartsApp
+python3 -m http.server 8080
 ```
 
-Then open: `http://localhost:8000`
+Then open: `http://localhost:8080`
 
 #### Option 2: Node.js (if installed)
 ```bash
-# Install http-server globally
+# Install http-server globally (one time)
 npm install -g http-server
 
 # Run it
-http-server -p 8000
+cd /path/to/DartsApp
+http-server -p 8080
 ```
 
-Then open: `http://localhost:8000`
+Then open: `http://localhost:8080`
 
 #### Option 3: VS Code Live Server
 1. Install the "Live Server" extension in VS Code
@@ -51,10 +51,12 @@ Then open: `http://localhost:8000`
 
 ### Configuration
 
-Edit the WebSocket URL in `app.js` if your AutoDarts is on a different IP:
-```javascript
-const url = "ws://YOUR_AUTODARTS_IP:3180/api/events";
-```
+1. Click the **⚙️ Settings** button in the header
+2. Enter your AutoDarts server IP address (e.g., `192.168.0.224`)
+3. Enter the port (usually `3180`)
+4. Click **Save & Reconnect**
+
+Your settings are automatically saved in browser localStorage and will persist between sessions.
 
 ## 🎮 Features
 
@@ -62,15 +64,18 @@ const url = "ws://YOUR_AUTODARTS_IP:3180/api/events";
 - **Real-time WebSocket connection** to AutoDarts
 - **Visual dartboard** with live dart positions
 - **Motion detection indicators** (dart in frame, hand detection, etc.)
-- **System stats** (FPS for each camera, resolution)
-- **Event logging** with timestamps
+- **Configurable connection settings** (IP address & port)
+- **Settings persistence** via localStorage
 
 ### Killer Game
 - Add 2-8 players
-- Each player assigned a unique number
+- **Configurable game options:**
+  - Starting lives (1-5)
+  - Hits required to become killer (1-3)
+- Each player assigned a random unique number
 - Hit your number to become a "Killer"
 - Eliminate other players by hitting their numbers
-- 3 lives per player
+- Progress tracking for becoming killer
 - Automatic turn management
 - Winner celebration
 
@@ -115,19 +120,25 @@ All styles are in `styles.css` with clear section comments:
 ## 📝 Notes
 
 - The dashboard automatically reconnects if the WebSocket connection drops
-- All game events are logged in the event log at the bottom
 - The dartboard shows up to 3 darts with different colors per throw
+- Connection settings are saved in your browser and persist between sessions
 
 ## 🐛 Troubleshooting
 
-**Issue**: "CORS error" or modules not loading
+**Issue**: "CORS error" or modules not loading  
 **Solution**: Make sure you're using a web server (see "Running the Dashboard" above)
 
-**Issue**: Can't connect to AutoDarts
-**Solution**: Check that the IP address in `app.js` matches your AutoDarts setup
+**Issue**: "Mixed Content" or "Insecure WebSocket" error  
+**Solution**: Access the app via HTTP (not HTTPS). If using Cloudflare Pages or similar, run it locally instead.
 
-**Issue**: Game doesn't advance to next player
+**Issue**: Can't connect to AutoDarts  
+**Solution**: Click ⚙️ Settings and verify your AutoDarts IP address and port are correct
+
+**Issue**: Game doesn't advance to next player  
 **Solution**: Make sure to remove darts from the board (trigger "Takeout finished" event)
+
+**Issue**: Settings aren't saving  
+**Solution**: Make sure your browser allows localStorage (check privacy/cookie settings)
 
 ## 📄 License
 
