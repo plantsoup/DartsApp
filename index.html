@@ -23,14 +23,7 @@
         
         <div class="settings-form">
           <div class="setting-row">
-            <label for="protocol">Protocol:</label>
-            <select id="protocol">
-              <option value="ws">ws:// (Standard)</option>
-              <option value="wss">wss:// (Secure/HTTPS)</option>
-            </select>
-          </div>
-          <div class="setting-row">
-            <label for="ip-address">IP Address / Hostname:</label>
+            <label for="ip-address">IP Address:</label>
             <input type="text" id="ip-address" placeholder="192.168.0.224" />
           </div>
           <div class="setting-row">
@@ -38,10 +31,9 @@
             <input type="text" id="port" placeholder="3180" />
           </div>
           <div class="setting-info">
-            <p>💡 <strong>Protocol Guide:</strong></p>
-            <p>• Use <strong>ws://</strong> for local AutoDarts servers (standard setup)</p>
-            <p>• Use <strong>wss://</strong> if accessing via HTTPS or using AutoDarts cloud relay</p>
-            <p>📝 Settings are saved automatically in your browser.</p>
+            <p>💡 Enter your AutoDarts server IP address and port.</p>
+            <p>Settings will be saved automatically.</p>
+            <p>⚠️ <strong>Note:</strong> If using HTTPS, your browser may block ws:// connections. For local AutoDarts servers, access this app via HTTP or host it locally.</p>
           </div>
         </div>
 
