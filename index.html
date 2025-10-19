@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoDarts Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🎯 AutoDarts Dashboard</h1>
+      <div class="header-info">
+        <div id="connection-status" class="status-badge status-disconnected">Connecting...</div>
+        <button id="settings-btn" class="settings-btn">⚙️ Settings</button>
+      </div>
+    </header>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal">
+      <div class="modal-content">
+        <h2>⚙️ Connection Settings</h2>
+        
+        <div class="settings-form">
+          <div class="setting-row">
+            <label for="ip-address">IP Address:</label>
+            <input type="text" id="ip-address" placeholder="192.168.0.224" />
+          </div>
+          <div class="setting-row">
+            <label for="port">Port:</label>
+            <input type="text" id="port" placeholder="3180" />
+          </div>
+          <div class="setting-info">
+            <p>💡 Enter your AutoDarts server IP address and port.</p>
+            <p>Settings will be saved automatically.</p>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button id="save-settings-btn" class="btn-primary">Save & Reconnect</button>
+          <button id="cancel-settings-btn" class="btn-secondary">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Game Setup Modal -->
+    <div id="game-modal" class="modal">
+      <div class="modal-content">
+        <h2>🎮 Start New Game</h2>
+        
+        <div class="game-type-selector">
+          <button class="game-type-btn active" data-game="killer">
+            <div class="game-type-title">Killer</div>
+            <div class="game-type-desc">Eliminate other players by hitting their numbers</div>
+          </button>
+          <button class="game-type-btn" data-game="301">
+            <div class="game-type-title">301</div>
+            <div class="game-type-desc">Race to zero from 301 (Coming Soon)</div>
+          </button>
+          <button class="game-type-btn" data-game="cricket">
+            <div class="game-type-title">Cricket</div>
+            <div class="game-type-desc">Close numbers 15-20 and bullseye (Coming Soon)</div>
+          </button>
+        </div>
+
+        <div id="game-options" class="game-options">
+          <h3>Game Options</h3>
+          <div class="option-row">
+            <label for="starting-lives">Starting Lives:</label>
+            <select id="starting-lives">
+              <option value="1">1 Life</option>
+              <option value="2">2 Lives</option>
+              <option value="3" selected>3 Lives</option>
+              <option value="4">4 Lives</option>
+              <option value="5">5 Lives</option>
+            </select>
+          </div>
+          <div class="option-row">
+            <label for="hits-to-killer">Hits to become Killer:</label>
+            <select id="hits-to-killer">
+              <option value="1" selected>1 Hit</option>
+              <option value="2">2 Hits</option>
+              <option value="3">3 Hits</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="player-setup">
+          <h3>Players</h3>
+          <div id="player-list"></div>
+          <div class="add-player-form">
+            <input type="text" id="player-name-input" placeholder="Player name" />
+            <button id="add-player-btn">Add Player</button>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button id="start-game-btn" class="btn-primary">Start Game</button>
+          <button id="cancel-game-btn" class="btn-secondary">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Game Controls -->
+    <div class="game-controls">
+      <button id="new-game-btn" class="btn-primary">New Game</button>
+      <button id="end-game-btn" class="btn-secondary" style="display: none;">End Game</button>
+    </div>
+
+    <div class="game-status" id="game-status">
+      <div class="game-status-text" id="status-text">Waiting for game...</div>
+      <div class="game-event" id="event-text"></div>
+    </div>
+
+    <!-- Game Board (shown when game is active) -->
+    <div id="game-board" style="display: none;"></div>
+
+    <div class="grid">
+      <!-- Dartboard Section -->
+      <div class="card">
+        <h2>
+          <span class="icon">🎯</span>
+          Dartboard
+        </h2>
+        <div class="dartboard-container">
+          <canvas id="dartboard" width="400" height="400"></canvas>
+        </div>
+        <div class="total-score" id="total-score">0</div>
+      </div>
+
+      <!-- Throws Section -->
+      <div class="card">
+        <h2>
+          <span class="icon">🎲</span>
+          Current Throws
+        </h2>
+        <div class="throw-list" id="throw-list">
+          <div style="text-align: center; color: #666; padding: 40px;">
+            No throws yet
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <!-- Motion State Section -->
+      <div class="card">
+        <h2>
+          <span class="icon">👁️</span>
+          Motion Detection
+        </h2>
+        <div class="motion-indicators">
+          <div class="indicator">
+            <div class="indicator-dot" id="dot-dart"></div>
+            <span>Dart in Frame</span>
+          </div>
+          <div class="indicator">
+            <div class="indicator-dot" id="dot-hand"></div>
+            <span>Hand in Frame</span>
+          </div>
+          <div class="indicator">
+            <div class="indicator-dot" id="dot-stable"></div>
+            <span>Stable</span>
+          </div>
+          <div class="indicator">
+            <div class="indicator-dot" id="dot-updating"></div>
+            <span>Updating</span>
+          </div>
+          <div class="indicator">
+            <div class="indicator-dot" id="dot-waiting"></div>
+            <span>Waiting</span>
+          </div>
+          <div class="indicator">
+            <div class="indicator-dot" id="dot-darts-removed"></div>
+            <span>Darts Removed</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script type="module">
+    import { init } from './app.js';
+    import { initGameSystem, handleGameThrow, isGameActive } from './games.js';
+
+    // Make game functions available globally for cross-module communication
+    window.handleGameThrow = handleGameThrow;
+    window.isGameActive = isGameActive;
+
+    // Initialize everything when DOM is ready
+    init();
+    initGameSystem();
+  </script>
+</body>
+</html>
