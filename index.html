@@ -24,7 +24,7 @@
         <div class="settings-form">
           <div class="setting-row">
             <label for="ip-address">IP Address:</label>
-            <input type="text" id="ip-address" placeholder="192.168.0.224" />
+            <input type="text" id="ip-address" placeholder="localhost" />
           </div>
           <div class="setting-row">
             <label for="port">Port:</label>
@@ -56,33 +56,51 @@
           </button>
           <button class="game-type-btn" data-game="301">
             <div class="game-type-title">301</div>
-            <div class="game-type-desc">Race to zero from 301 (Coming Soon)</div>
+            <div class="game-type-desc">Race to zero from 301 points</div>
           </button>
           <button class="game-type-btn" data-game="cricket">
             <div class="game-type-title">Cricket</div>
-            <div class="game-type-desc">Close numbers 15-20 and bullseye (Coming Soon)</div>
+            <div class="game-type-desc">Close numbers 15-20 and bullseye</div>
+          </button>
+          <button class="game-type-btn" data-game="snakes">
+            <div class="game-type-title">Snakes & Ladders</div>
+            <div class="game-type-desc">Race to space 100 - watch out for snakes!</div>
           </button>
         </div>
 
         <div id="game-options" class="game-options">
           <h3>Game Options</h3>
-          <div class="option-row">
-            <label for="starting-lives">Starting Lives:</label>
-            <select id="starting-lives">
-              <option value="1">1 Life</option>
-              <option value="2">2 Lives</option>
-              <option value="3" selected>3 Lives</option>
-              <option value="4">4 Lives</option>
-              <option value="5">5 Lives</option>
-            </select>
+          
+          <!-- Killer Options -->
+          <div id="killer-options">
+            <div class="option-row">
+              <label for="starting-lives">Starting Lives:</label>
+              <select id="starting-lives">
+                <option value="1">1 Life</option>
+                <option value="2">2 Lives</option>
+                <option value="3" selected>3 Lives</option>
+                <option value="4">4 Lives</option>
+                <option value="5">5 Lives</option>
+              </select>
+            </div>
+            <div class="option-row">
+              <label for="hits-to-killer">Hits to become Killer:</label>
+              <select id="hits-to-killer">
+                <option value="1" selected>1 Hit</option>
+                <option value="2">2 Hits</option>
+                <option value="3">3 Hits</option>
+              </select>
+            </div>
           </div>
-          <div class="option-row">
-            <label for="hits-to-killer">Hits to become Killer:</label>
-            <select id="hits-to-killer">
-              <option value="1" selected>1 Hit</option>
-              <option value="2">2 Hits</option>
-              <option value="3">3 Hits</option>
-            </select>
+          
+          <!-- 301 Options -->
+          <div id="x01-options" style="display: none;">
+            <div class="option-row">
+              <label for="double-out">
+                <input type="checkbox" id="double-out" style="width: auto; margin-right: 8px;">
+                Double Out Required
+              </label>
+            </div>
           </div>
         </div>
 
@@ -183,7 +201,7 @@
 
   <script type="module">
     import { init } from './app.js';
-    import { initGameSystem, handleGameThrow, isGameActive } from './games.js';
+    import { initGameSystem, handleGameThrow, isGameActive } from './games/index.js';
 
     // Make game functions available globally for cross-module communication
     window.handleGameThrow = handleGameThrow;
