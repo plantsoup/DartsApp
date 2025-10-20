@@ -1,0 +1,5 @@
+# DartsHub Extension Marker
+# This file indicates this directory contains a DartsHub extension
+extension_type=web_app
+version=1.0.0
+

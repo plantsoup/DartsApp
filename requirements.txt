@@ -1,0 +1,5 @@
+# Python requirements for AutoDarts Games Dashboard Extension
+# No external dependencies required - uses Python standard library only
+# 
+# Minimum Python version: 3.7+
+

@@ -1,0 +1,90 @@
+{
+  "name": "AutoDarts Games Dashboard",
+  "version": "1.0.0",
+  "manifest_version": 1,
+  "description": "Web-based gaming platform with Killer, 301, Cricket, and Snakes & Ladders for AutoDarts",
+  "author": "DartsApp Team",
+  "homepage": "https://github.com/yourusername/dartsapp",
+  
+  "compatibility": {
+    "autodarts": ">=2.0.0",
+    "dartshub": ">=1.0.0"
+  },
+  
+  "entry_point": "extension.py",
+  "type": "web_app",
+  
+  "permissions": [
+    "network",
+    "websocket"
+  ],
+  
+  "settings": {
+    "port": {
+      "type": "integer",
+      "default": 8080,
+      "description": "Port to run the web server on",
+      "min": 1024,
+      "max": 65535
+    },
+    "auto_open_browser": {
+      "type": "boolean",
+      "default": true,
+      "description": "Automatically open browser when extension starts"
+    }
+  },
+  
+  "games": [
+    {
+      "id": "killer",
+      "name": "Killer",
+      "description": "Elimination game - become a killer and eliminate opponents",
+      "players": "2-8"
+    },
+    {
+      "id": "301",
+      "name": "301",
+      "description": "Race to zero from 301 points",
+      "players": "2-8"
+    },
+    {
+      "id": "cricket",
+      "name": "Cricket",
+      "description": "Close numbers 15-20 and bullseye",
+      "players": "2-8"
+    },
+    {
+      "id": "snakes",
+      "name": "Snakes & Ladders",
+      "description": "Race to space 100 with snakes and ladders",
+      "players": "2-8"
+    }
+  ],
+  
+  "features": [
+    "Multiple game modes",
+    "Real-time WebSocket connection",
+    "Visual dartboard with animations",
+    "Player management",
+    "Game statistics",
+    "Configurable game options",
+    "FlightClub-inspired UI",
+    "Responsive design"
+  ],
+  
+  "categories": [
+    "games",
+    "visualization",
+    "entertainment"
+  ],
+  
+  "tags": [
+    "killer",
+    "301",
+    "cricket",
+    "snakes-ladders",
+    "games",
+    "multiplayer"
+  ]
+}
+

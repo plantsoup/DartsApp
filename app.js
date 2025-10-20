@@ -4,8 +4,8 @@ let ws;
 let reconnectTimeout;
 
 // Default connection settings
-const DEFAULT_IP = "192.168.0.224";
-const DEFAULT_PORT = "3180";
+const DEFAULT_IP = "localhost";
+const DEFAULT_PORT = "8080";
 
 // Load settings from localStorage
 function loadSettings() {
