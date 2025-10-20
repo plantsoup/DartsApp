@@ -1,212 +1,214 @@
-# 🎯 AutoDarts Games Dashboard
+# AutoDarts Games Dashboard - DartsHub Extension
 
-A modern, feature-rich web-based gaming platform for AutoDarts. Available as a standalone app or DartsHub extension.
+A feature-rich web-based gaming platform for AutoDarts with multiple game modes, beautiful animations, and an intuitive interface.
 
-## 📁 File Structure
+## 🎯 Features
 
-```
-├── index.html           # Main HTML structure
-├── styles.css           # All styling and animations
-├── app.js               # WebSocket connection & dartboard rendering
-├── games/               # Modular game system
-│   ├── index.js         # Game manager & exports
-│   ├── base.js          # Base game class
-│   ├── killer.js        # Killer game
-│   ├── x01.js           # 301 game
-│   ├── cricket.js       # Cricket game
-│   └── snakes-ladders.js # Snakes & Ladders game
-├── README.md            # This file
-└── ARCHITECTURE.md      # Technical documentation
-```
+- **4 Game Modes**: Killer, 301, Cricket, Snakes & Ladders
+- **2-8 Players**: Support for multiple players
+- **Real-time Updates**: WebSocket connection to AutoDarts
+- **Beautiful UI**: FlightClub-inspired design with smooth animations
+- **Configurable**: Customizable game options
+- **Web-Based**: Access from any device on your network
 
-## 🚀 Getting Started
+## 📦 Installation
 
-### Requirements
-- A local web server (required for ES6 modules)
-- AutoDarts running on your network
+### Via DartsHub (Recommended)
 
-### Running the Dashboard
+1. Open DartsHub
+2. Go to Extensions
+3. Search for "AutoDarts Games Dashboard"
+4. Click Install
+5. Start the extension
 
-**⚠️ Important:** This app must be served over **HTTP** (not HTTPS) to connect to local AutoDarts servers, since browsers block insecure WebSocket connections from HTTPS pages.
+### Manual Installation
 
-Since this project uses ES6 modules, you need to serve it from a web server. Here are your options:
+1. Clone or download this repository
+2. Place in your DartsHub extensions folder
+3. Install dependencies (none required!)
+4. Run `python extension.py`
 
-**Python:**
+## 🚀 Quick Start
+
+### Starting the Extension
+
 ```bash
-cd /path/to/DartsApp
-python3 -m http.server 8080
-# Or use the extension launcher
-python3 extension.py
+# Start with default settings
+python extension.py
+
+# Start on a different port
+python extension.py --port 8000
+
+# Start without opening browser
+python extension.py --no-browser
+
+# Show version information
+python extension.py --version
 ```
 
-Then open: `http://localhost:8080`
+### First Time Setup
 
-**Node.js:**
-```bash
-npm install -g http-server
-cd /path/to/DartsApp
-http-server -p 8080
-```
+1. Extension starts automatically and opens your browser
+2. Click the ⚙️ Settings button
+3. Enter your AutoDarts server IP address (e.g., `192.168.0.224`)
+4. Enter the port (usually `3180`)
+5. Click "Save & Reconnect"
+6. You're ready to play!
 
-**VS Code Live Server:**
-1. Install the "Live Server" extension in VS Code
-2. Right-click on `index.html`
-3. Select "Open with Live Server"
+## 🎮 Games
 
-### Configuration
-
-1. Click the **⚙️ Settings** button in the header
-2. Enter your AutoDarts server IP address (e.g., `192.168.0.224`)
-3. Enter the port (usually `3180`)
-4. Click **Save & Reconnect**
-
-Your settings are automatically saved in browser localStorage and will persist between sessions.
-
-## 🎮 Features
-
-### Dashboard
-- **Real-time WebSocket connection** to AutoDarts
-- **Visual dartboard** with live dart positions
-- **Motion detection indicators** (dart in frame, hand detection, etc.)
-- **Configurable connection settings** (IP address & port)
-- **Settings persistence** via localStorage
-
-### Games
-
-**Killer**
-- Add 2-8 players
-- Configurable options: Starting lives (1-5), Hits to become killer (1-3)
-- Each player assigned a random number
+### Killer
+- 2-8 players
+- Each player gets a random number
 - Hit your number to become a "Killer"
-- Eliminate others by hitting their numbers
-- Progress tracking and automatic turn management
+- Eliminate opponents by hitting their numbers
+- Configurable: lives (1-5), hits to killer (1-3)
 
-**301**
-- Classic race to zero from 301 points
-- Optional double-out finish
-- Live score tracking with animations
-- Real-time 3-dart average calculation
-- Checkout range highlighting (< 170)
-- Turn-by-turn score display
-- Highest score tracking
-
-**Cricket**
-- Standard cricket (15-20 and Bull)
-- Visual mark tracking with animations
-- Points scoring for closed numbers
-- Auto-detect winner when all numbers closed
-- Beautiful mark animations (/, //, X)
-
-**Snakes & Ladders**
-- Race to space 100 on a visual game board
-- Each dart score moves you forward
-- 12 snakes that slide you down
-- 10 ladders that boost you up
-- Live board with colored player markers
-- Animated player movement
-- Snake pattern board layout (authentic feel)
-- Finish space pulses with golden animation
-
-## 🎯 How to Play Killer
-
-1. Click **"New Game"**
-2. Add players (minimum 2, maximum 8)
-3. Click **"Start Game"**
-4. Each player takes turns:
-   - First, hit your assigned number to become a "KILLER"
-   - Once a killer, hit other players' numbers to eliminate them
-   - Each hit removes one life (3 lives total)
-5. Remove your darts from the board to end your turn
-6. Last player standing wins!
-
-## 🎨 Visual Features
-
-**FlightClub-Inspired Design:**
-- Smooth animations and transitions
-- Glowing effects on active players
-- Score pulse animations
+### 301
+- Classic race to zero
+- Live scoring and averages
 - Checkout range highlighting
-- Winner celebration with color-shifting effects
-- Turn indicators with glow animations
-- Mark animations in Cricket
-- Player bounce animations in Snakes & Ladders
-- Color-coded snake (red) and ladder (green) spaces
-- Responsive design with gradient backgrounds
+- Optional double-out
+- Turn-by-turn statistics
 
-## 🔮 Coming Soon
+### Cricket
+- Standard cricket (15-20 + Bull)
+- Visual mark tracking (/, //, X)
+- Points scoring
+- Animated marks
+- Auto-win detection
 
-- **Around the Clock** - Hit 1-20 in order
-- **Shanghai** - Hit single, double, triple
-- **501 variant**
-- Sound effects
-- Player statistics and history
-- Game replays
+### Snakes & Ladders
+- Race to space 100
+- Visual 10x10 board
+- 12 snakes, 10 ladders
+- Animated player movement
+- Colored player markers
 
-## 🛠️ Development
+## ⚙️ Configuration
 
-### Adding New Games
+### config.ini Options
 
-To add a new game, edit `games.js`:
+```ini
+[SETTINGS]
+port = 8080                    # Web server port
+auto_open_browser = true       # Auto-open browser on start
+autodarts_host = 192.168.0.224 # Your AutoDarts IP
+autodarts_port = 3180          # AutoDarts port
+protocol = ws                  # ws or wss
 
-1. Create a new game class (similar to `KillerGame`)
-2. Update the game selection in `startGame()` function
-3. Enable the game button in `index.html`
+[KILLER_DEFAULTS]
+starting_lives = 3             # Default lives (1-5)
+hits_to_killer = 1             # Hits needed to become killer
 
-### Modifying Styles
+[X01_DEFAULTS]
+starting_score = 301           # Starting score
+double_out = false             # Require double to finish
+```
 
-All styles are in `styles.css` with clear section comments:
-- Base styles
-- Modal styles
-- Game board styles
-- Animations
+### Web UI Settings
 
-## 📝 Notes
-
-- The dashboard automatically reconnects if the WebSocket connection drops
-- The dartboard shows up to 3 darts with different colors per throw
-- Connection settings are saved in your browser and persist between sessions
-
-## 📦 Extension Files
-
-- `extension.py` - Python launcher for DartsHub
-- `config.ini` - Extension configuration
-- `manifest.json` - Extension metadata
-- `requirements.txt` - Python dependencies (none!)
-- `launch.sh` - Quick launch script
-- `EXTENSION_README.md` - Detailed extension docs
+All game settings can be configured through the web interface:
+- Click ⚙️ Settings for connection config
+- Game options appear when starting a new game
 
 ## 🌐 Network Access
 
 ### Local Access
-Access on the same computer:
-```
-http://localhost:8080
-```
+- Access at: `http://localhost:8080`
+- Works on the same computer as the extension
 
 ### Network Access
-Access from other devices on your network:
-1. Find your computer's IP (e.g., `192.168.0.100`)
-2. Access from any device: `http://192.168.0.100:8080`
-3. Perfect for tablets/phones as remote displays!
+- Find your computer's IP (e.g., `192.168.0.100`)
+- Access from any device: `http://192.168.0.100:8080`
+- Great for tablets/phones as remote displays!
 
-## 🐛 Troubleshooting
+## 🛠️ Requirements
 
-**Issue**: "CORS error" or modules not loading  
-**Solution**: Make sure you're using a web server (not opening `index.html` directly)
+- **Python**: 3.7 or higher
+- **AutoDarts**: v2.0.0 or higher
+- **Browser**: Modern browser with WebSocket support
+- **Network**: AutoDarts server must be accessible
 
-**Issue**: "Mixed Content" or "Insecure WebSocket" error  
-**Solution**: Access the app via HTTP (not HTTPS). If using Cloudflare Pages or similar, run it locally instead.
+No external Python packages required!
 
-**Issue**: Can't connect to AutoDarts  
-**Solution**: Click ⚙️ Settings and verify your AutoDarts IP address and port are correct
+## 📝 Troubleshooting
 
-**Issue**: Game doesn't advance to next player  
-**Solution**: Make sure to remove darts from the board (trigger "Takeout finished" event)
+### Connection Issues
 
-**Issue**: Settings aren't saving  
-**Solution**: Make sure your browser allows localStorage (check privacy/cookie settings)
+**"Can't connect to AutoDarts"**
+- Check IP address in Settings
+- Verify AutoDarts is running
+- Ensure port 3180 is accessible
+- Try using `ws://` protocol
+
+**"Mixed Content Error"**
+- Access via HTTP not HTTPS
+- Use `http://localhost:8080`
+- If using network IP, use `http://` not `https://`
+
+### Port Issues
+
+**"Port already in use"**
+```bash
+# Use a different port
+python extension.py --port 8888
+```
+
+### Browser Issues
+
+**"Modules not loading"**
+- Make sure you're accessing via the web server
+- Don't open `index.html` directly
+- Use `http://localhost:8080/index.html`
+
+## 🔄 Updates
+
+The extension checks for updates automatically through DartsHub.
+
+To manually update:
+```bash
+cd /path/to/extension
+git pull
+```
+
+## 🤝 Contributing
+
+Contributions welcome! Please:
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
 
 ## 📄 License
 
-Free to use and modify!
+MIT License - Free to use and modify
+
+## 👥 Credits
+
+- Built for the AutoDarts community
+- Inspired by FlightClub Darts
+- Uses AutoDarts WebSocket API
+
+## 📧 Support
+
+- Issues: GitHub Issues
+- Discussions: AutoDarts Discord
+- Email: support@dartsapp.io
+
+## 🎯 Changelog
+
+### v1.0.0 (Current)
+- Initial release
+- 4 game modes (Killer, 301, Cricket, Snakes & Ladders)
+- Web-based interface
+- Real-time WebSocket connection
+- Configurable game options
+- Beautiful animations
+- Multi-player support (2-8 players)
+- Settings persistence
+
+---
+
+**Enjoy playing! 🎯**
 
