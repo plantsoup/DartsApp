@@ -213,31 +213,6 @@ h1 {
   box-shadow: 0 0 10px #00ff88;
 }
 
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
-}
-
-.stat-box {
-  text-align: center;
-  padding: 15px;
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 10px;
-}
-
-.stat-label {
-  font-size: 0.8rem;
-  color: #999;
-  margin-bottom: 5px;
-}
-
-.stat-value {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #00aaff;
-}
-
 .game-status {
   text-align: center;
   padding: 25px;
@@ -265,50 +240,6 @@ h1 {
   color: #00ff88;
   margin: 20px 0;
   text-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
-}
-
-.event-log {
-  max-height: 300px;
-  overflow-y: auto;
-  font-family: 'Courier New', monospace;
-  font-size: 0.85rem;
-  line-height: 1.6;
-}
-
-.event-log::-webkit-scrollbar {
-  width: 8px;
-}
-
-.event-log::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 4px;
-}
-
-.event-log::-webkit-scrollbar-thumb {
-  background: rgba(0, 255, 136, 0.3);
-  border-radius: 4px;
-}
-
-.log-entry {
-  padding: 5px;
-  margin-bottom: 3px;
-  border-radius: 3px;
-  opacity: 0.7;
-  transition: opacity 0.3s;
-}
-
-.log-entry:hover {
-  opacity: 1;
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.log-entry.new {
-  animation: highlight 1s ease-out;
-}
-
-@keyframes highlight {
-  0% { background: rgba(0, 255, 136, 0.3); }
-  100% { background: transparent; }
 }
 
 .icon {
