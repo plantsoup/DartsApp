@@ -43,8 +43,6 @@ def start_server(port=PORT, open_browser=True):
             print(f"📱 Access the dashboard at: http://localhost:{port}/index.html")
             print("\n🎮 Available Games:")
             print("   - Killer")
-            print("   - 301")
-            print("   - Cricket")
             print("   - Snakes & Ladders")
             print("\n⚙️  Configure your AutoDarts connection in Settings")
             print("\n💡 Press Ctrl+C to stop the server\n")

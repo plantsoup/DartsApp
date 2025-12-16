@@ -9,6 +9,7 @@ export class KillerGame extends BaseGame {
     // Game options with defaults
     this.startingLives = options.startingLives || 3;
     this.hitsToKiller = options.hitsToKiller || 1;
+    const startAsKiller = options.startAsKiller || false;
     
     // Shuffle numbers for random assignment
     const availableNumbers = this.shuffleNumbers();
@@ -17,8 +18,8 @@ export class KillerGame extends BaseGame {
       ...p,
       number: availableNumbers[i],
       lives: this.startingLives,
-      isKiller: false,
-      hitsOnOwnNumber: 0,
+      isKiller: startAsKiller,
+      hitsOnOwnNumber: startAsKiller ? this.hitsToKiller : 0,
       eliminated: false
     }));
   }
@@ -44,22 +45,44 @@ export class KillerGame extends BaseGame {
 
     const currentPlayer = this.getCurrentPlayer();
     const hitNumber = segment.number;
+    const multiplier = segment.multiplier || 1; // 1 = single, 2 = double, 3 = treble
     const eventText = document.getElementById('event-text');
 
-    // Check if player hit their own number (to become killer)
-    if (hitNumber === currentPlayer.number && !currentPlayer.isKiller) {
-      currentPlayer.hitsOnOwnNumber++;
-      
-      if (currentPlayer.hitsOnOwnNumber >= this.hitsToKiller) {
-        currentPlayer.isKiller = true;
-        eventText.textContent = `${currentPlayer.name} is now a KILLER! 💀`;
+    // Check if player hit their own number
+    if (hitNumber === currentPlayer.number) {
+      // If not a killer yet, work toward becoming killer
+      if (!currentPlayer.isKiller) {
+        currentPlayer.hitsOnOwnNumber += multiplier;
+        
+        if (currentPlayer.hitsOnOwnNumber >= this.hitsToKiller) {
+          currentPlayer.isKiller = true;
+          const hitType = multiplier === 2 ? 'double' : multiplier === 3 ? 'treble' : '';
+          eventText.textContent = `${currentPlayer.name} hit ${hitType} ${hitNumber}! They are now a KILLER! 💀`;
+        } else {
+          const remaining = this.hitsToKiller - currentPlayer.hitsOnOwnNumber;
+          const hitType = multiplier === 2 ? 'double' : multiplier === 3 ? 'treble' : '';
+          eventText.textContent = `${currentPlayer.name} hit ${hitType} ${hitNumber}! ${remaining} more to become killer`;
+        }
+        
+        this.render();
+        return;
       } else {
-        const remaining = this.hitsToKiller - currentPlayer.hitsOnOwnNumber;
-        eventText.textContent = `${currentPlayer.name} hit their number! ${remaining} more to become killer`;
+        // Killer hit their own number - take lives off themselves
+        currentPlayer.lives -= multiplier;
+        const hitType = multiplier === 2 ? 'double' : multiplier === 3 ? 'treble' : '';
+        eventText.textContent = `${currentPlayer.name} hit ${hitType} ${hitNumber} on themselves! `;
+        
+        if (currentPlayer.lives <= 0) {
+          currentPlayer.eliminated = true;
+          eventText.textContent += `${currentPlayer.name} is eliminated! 💀`;
+        } else {
+          eventText.textContent += `${currentPlayer.name} has ${currentPlayer.lives} life/lives left`;
+        }
+
+        this.checkWinner();
+        this.render();
+        return;
       }
-      
-      this.render();
-      return;
     }
 
     // If player is a killer, check if they hit another player's number
@@ -71,8 +94,9 @@ export class KillerGame extends BaseGame {
       );
 
       if (targetPlayer) {
-        targetPlayer.lives--;
-        eventText.textContent = `${currentPlayer.name} hit ${targetPlayer.name}! `;
+        targetPlayer.lives -= multiplier;
+        const hitType = multiplier === 2 ? 'double' : multiplier === 3 ? 'treble' : '';
+        eventText.textContent = `${currentPlayer.name} hit ${hitType} ${hitNumber} on ${targetPlayer.name}! `;
         
         if (targetPlayer.lives <= 0) {
           targetPlayer.eliminated = true;

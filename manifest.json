@@ -2,7 +2,7 @@
   "name": "AutoDarts Games Dashboard",
   "version": "1.0.0",
   "manifest_version": 1,
-  "description": "Web-based gaming platform with Killer, 301, Cricket, and Snakes & Ladders for AutoDarts",
+  "description": "Web-based gaming platform with Killer and Snakes & Ladders for AutoDarts",
   "author": "DartsApp Team",
   "homepage": "https://github.com/yourusername/dartsapp",
   
@@ -42,18 +42,6 @@
       "players": "2-8"
     },
     {
-      "id": "301",
-      "name": "301",
-      "description": "Race to zero from 301 points",
-      "players": "2-8"
-    },
-    {
-      "id": "cricket",
-      "name": "Cricket",
-      "description": "Close numbers 15-20 and bullseye",
-      "players": "2-8"
-    },
-    {
       "id": "snakes",
       "name": "Snakes & Ladders",
       "description": "Race to space 100 with snakes and ladders",
@@ -80,8 +68,6 @@
   
   "tags": [
     "killer",
-    "301",
-    "cricket",
     "snakes-ladders",
     "games",
     "multiplayer"

@@ -1,8 +1,6 @@
 // ========== GAME SYSTEM ==========
 
 import { KillerGame } from './killer.js';
-import { X01Game } from './x01.js';
-import { CricketGame } from './cricket.js';
 import { SnakesAndLaddersGame } from './snakes-ladders.js';
 
 let currentGame = null;
@@ -70,17 +68,13 @@ export function initGameSystem() {
 
 function updateGameOptions() {
   const killerOptions = document.getElementById('killer-options');
-  const x01Options = document.getElementById('x01-options');
   
   // Hide all game-specific options first
   if (killerOptions) killerOptions.style.display = 'none';
-  if (x01Options) x01Options.style.display = 'none';
   
   // Show relevant options
   if (selectedGameType === 'killer') {
     if (killerOptions) killerOptions.style.display = 'block';
-  } else if (selectedGameType === '301' || selectedGameType === '501') {
-    if (x01Options) x01Options.style.display = 'block';
   }
 }
 
@@ -137,23 +131,13 @@ function startGame() {
     // Get game options
     const startingLives = parseInt(document.getElementById('starting-lives').value);
     const hitsToKiller = parseInt(document.getElementById('hits-to-killer').value);
+    const startAsKiller = document.getElementById('start-as-killer')?.checked || false;
     
     currentGame = new KillerGame(setupPlayers, {
       startingLives,
-      hitsToKiller
+      hitsToKiller,
+      startAsKiller
     });
-    currentGame.start();
-  } else if (selectedGameType === '301') {
-    const startingScore = 301;
-    const doubleOut = document.getElementById('double-out')?.checked || false;
-    
-    currentGame = new X01Game(setupPlayers, {
-      startingScore,
-      doubleOut
-    });
-    currentGame.start();
-  } else if (selectedGameType === 'cricket') {
-    currentGame = new CricketGame(setupPlayers);
     currentGame.start();
   } else if (selectedGameType === 'snakes') {
     currentGame = new SnakesAndLaddersGame(setupPlayers);

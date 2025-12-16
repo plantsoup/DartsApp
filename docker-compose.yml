@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  dartsapp:
+    build: .
+    container_name: dartsapp
+    ports:
+      - "8080:8080"
+    volumes:
+      # Mount the app directory for development (optional - remove for production)
+      - .:/app
+    restart: unless-stopped
+    # No environment variables needed - uses Python standard library only
+
